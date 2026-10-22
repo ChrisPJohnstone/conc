@@ -12,14 +12,14 @@ endif
 .PHONY: clean install uninstall lint
 
 $(BINARY): $(shell find . -type f -name '*.go')
-	go build -o $(BINARY) .
+	go build -o $(BINARY) ./cmd/conc
 
 clean:
 	rm -f $(BINARY)
 	go clean
 
 install:
-	go install .
+	go install ./cmd/conc
 
 uninstall:
 	rm -f $(INSTALL_DIR)/$(BINARY)
