@@ -1,6 +1,6 @@
 package main
 
-import "conventional-commit/cmd"
+import "conc/cmd"
 
 func main() {
 	cmd.Execute()
