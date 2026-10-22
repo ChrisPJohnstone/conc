@@ -30,6 +30,11 @@ This is a simple utility to ease the suffering.
 
 ## Development
 
+- The entrypoint lives in [`cmd/conc`](./cmd/conc) (binary `conc`) and the command implementation in [`internal/cmd`](./internal/cmd)
+    ```sh
+    go run ./cmd/conc -t fix "fixed some defect"
+    go install github.com/ChrisPJohnstone/go-conventional-commit/cmd/conc@latest
+    ```
 - Run linter locally in a container
     ```sh
     make lint                         # Defaults to `podman`
