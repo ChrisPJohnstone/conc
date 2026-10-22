@@ -1,4 +1,4 @@
-# Go Conventional Commit
+# CONventional Commit (`conc`) Helper
 
 Typing conventional commit message is getting tedious. This binary is to speed that up for me
 

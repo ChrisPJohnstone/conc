@@ -1,4 +1,4 @@
-module conventional-commit
+module conc
 
 go 1.27.3
 
