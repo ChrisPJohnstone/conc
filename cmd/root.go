@@ -9,8 +9,8 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "conc",
-	Short: "Conventional Commit Helper",
+	Use:   cmdName,
+	Short: cmdShortHelp,
 	Args:  cobra.MinimumNArgs(1),
 	RunE:  main,
 }
