@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"slices"
 
 	"github.com/spf13/cobra"
 )
@@ -13,23 +15,30 @@ var rootCmd = &cobra.Command{
 	Run:   main,
 }
 
+func isValidCommitType(commitType string) bool {
+	return slices.Contains(commitTypes, commitType)
+}
+
 func init() {
 	flags := rootCmd.Flags()
 	flags.StringP(
-		typeFlag,
-		string(typeFlag[0]),
-		typeFlagDefault,
-		typeFlagDescription,
+		commitTypeFlag,
+		string(commitTypeFlag[0]),
+		commitTypeFlagDefault,
+		commitTypeFlagDescription,
 	)
 }
 
 func main(cmd *cobra.Command, args []string) {
 	flags := cmd.Flags()
-	typeValue, err := flags.GetString("type")
+	commitType, err := flags.GetString("type")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-	fmt.Printf("Type %s\n", typeValue)
+	if !isValidCommitType(commitType) {
+		log.Fatalf("%s is not a valid commit type", commitType)
+	}
+	fmt.Printf("Type %s\n", commitType)
 }
 
 func Execute() {
