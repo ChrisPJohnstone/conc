@@ -26,7 +26,7 @@ func init() {
 		commitTypeFlag,
 		string(commitTypeFlag[0]),
 		commitTypeFlagDefault,
-		commitTypeFlagDescription,
+		fmt.Sprintf("commit type (valid: %s)", strings.Join(commitTypes, ", ")),
 	)
 }
 
