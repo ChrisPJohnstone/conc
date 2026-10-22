@@ -14,10 +14,16 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
+	rootCmd.Flags().String("type", defaultType, "commit type")
 }
 
 func main(cmd *cobra.Command, args []string) {
-	fmt.Printf("Hello World!\n")
+	flags := cmd.Flags()
+	typeValue, err := flags.GetString("type")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Type %s\n", typeValue)
 }
 
 func Execute() {
