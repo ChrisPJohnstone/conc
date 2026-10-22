@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"slices"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -38,8 +39,8 @@ func main(cmd *cobra.Command, args []string) error {
 	if !isValidCommitType(commitType) {
 		return fmt.Errorf("%s is not a valid commit type", commitType)
 	}
-	fmt.Printf("Type %s\n", commitType)
-	fmt.Printf("%s\n", args)
+	subject := strings.Join(args, " ")
+	fmt.Printf("%s: %s\n", commitType, subject)
 	return nil
 }
 
