@@ -1,6 +1,8 @@
 package cmd
 
 const (
+	cmdName                   string = "conc"
+	cmdShortHelp              string = "Conventional Commit Helper"
 	commitTypeFlag            string = "type"
 	commitTypeFlagDefault     string = "feat"
 	commitTypeFlagDescription string = "type of commit"
