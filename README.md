@@ -1,14 +1,40 @@
-# Go Template
+# Go Conventional Commit
 
-A template repo for go projects.
+Typing convetional commit message is getting tedious, quick helper to speed that up
 
-Includes
+## Spec
 
-- Github settings [probot/settings](https://probot.github.io/apps/settings/) automatically match [.github/settings.yml](.github/settings.yml)
-- Workflows for testing & linting go code
-- [Release Please](https://github.com/googleapis/release-please) workflow for versioning & tagging.
+Scribblings of what I want, will clean up later
 
-## Pre-Requisite
+- Flag for type
 
-- Requires [probot/settings](https://probot.github.io/apps/settings/) app installed on your account
-- Requires a PAT token in repo secrets for [Release Please](https://github.com/googleapis/release-please)
+    ```sh
+    ${binary} -t fix
+    ${binary} --type chore
+    ```
+
+    - Default to `feat`
+    - Only accept types from [full spec](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
+        ```
+        [
+          'build',
+          'chore',
+          'ci',
+          'docs',
+          'feat',
+          'fix',
+          'perf',
+          'refactor',
+          'revert',
+          'style',
+          'test'
+        ];
+        ```
+
+- Automatically gets ticket ID's from branch name
+    - This will probably be hardcoded to what I work on
+    - `{type}({branch}): {subject}`
+- Subject will be positional argument, all I really use
+- Might add support for body & footer as flags
+- Haven't decided if it will actually commit, output message or open message in editor
+    - Have it output the message and do git alias like `commit -m "$( cc $@ )"`?
