@@ -1,6 +1,6 @@
 # Go Conventional Commit
 
-Typing convetional commit message is getting tedious. This binary is to speed that up for me
+Typing conventional commit message is getting tedious. This binary is to speed that up for me
 
 ## Usage
 
