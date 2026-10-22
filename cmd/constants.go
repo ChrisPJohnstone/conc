@@ -1,3 +1,5 @@
 package cmd
 
-const defaultType string = "feat"
+const typeFlag string = "type"
+const typeFlagDefault string = "feat"
+const typeFlagDescription string = "type of commit"

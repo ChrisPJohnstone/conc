@@ -14,7 +14,13 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.Flags().String("type", defaultType, "commit type")
+	flags := rootCmd.Flags()
+	flags.StringP(
+		typeFlag,
+		string(typeFlag[0]),
+		typeFlagDefault,
+		typeFlagDescription,
+	)
 }
 
 func main(cmd *cobra.Command, args []string) {
