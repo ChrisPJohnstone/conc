@@ -11,6 +11,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "conc",
 	Short: "Conventional Commit Helper",
+	Args:  cobra.MinimumNArgs(1),
 	RunE:  main,
 }
 
@@ -38,6 +39,7 @@ func main(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("%s is not a valid commit type", commitType)
 	}
 	fmt.Printf("Type %s\n", commitType)
+	fmt.Printf("%s\n", args)
 	return nil
 }
 
