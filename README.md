@@ -1,9 +1,18 @@
 # CONventional Commit (`conc`) Helper
 
-Typing conventional commit message is getting tedious. This binary is to speed that up for me
+Typing conventional commit messages is a slightly tedious and I'm extremely lazy.
+
+This is a simple utility to ease the suffering.
 
 ## Usage
 
+- The [`Makefile`](./Makefile) handles most things to do with compilation, installation & cleanup
+    ```sh
+    make              # Compile binary locally
+    make clean        # Remove local binary
+    make install      # Install binary to go path
+    make uninstall    # Install binary to go path
+    ```
 - Positional arguments are concatenated together to create the subject of the message
     ```sh
     conc added some new functions
@@ -18,3 +27,11 @@ Typing conventional commit message is getting tedious. This binary is to speed t
     - Read ticket number from branch `feat(TEST-123): ...`
     - Read type from branch? `feature/TEST-123`
     - Body & Footer support for commits
+
+## Development
+
+- Run linter locally in a container
+    ```sh
+    make lint                         # Defaults to `podman`
+    make lint CONTAINER_ENGINE=docker # Run linter in docker
+    ```
