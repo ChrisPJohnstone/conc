@@ -29,6 +29,7 @@ rulesets:
           required_review_thread_resolution: true
           allowed_merge_methods:
             - squash
+            - rebase # enabled while pre v1
     bypass_actors:
       - actor_id: 61227735
         actor_type: User
