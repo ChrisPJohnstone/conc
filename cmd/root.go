@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"slices"
 
@@ -12,7 +11,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "conc",
 	Short: "Conventional Commit Helper",
-	Run:   main,
+	RunE:  main,
 }
 
 func isValidCommitType(commitType string) bool {
@@ -29,16 +28,17 @@ func init() {
 	)
 }
 
-func main(cmd *cobra.Command, args []string) {
+func main(cmd *cobra.Command, args []string) error {
 	flags := cmd.Flags()
 	commitType, err := flags.GetString("type")
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	if !isValidCommitType(commitType) {
-		log.Fatalf("%s is not a valid commit type", commitType)
+		return fmt.Errorf("%s is not a valid commit type", commitType)
 	}
 	fmt.Printf("Type %s\n", commitType)
+	return nil
 }
 
 func Execute() {
