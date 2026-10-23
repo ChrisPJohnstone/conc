@@ -4,7 +4,7 @@ repository:
   has_wiki: false
   allow_squash_merge: true
   allow_merge_commit: false
-  allow_rebase_merge: true # enabled while pre v1
+  allow_rebase_merge: false
   delete_branch_on_merge: true
   allow_auto_merge: true
 
@@ -29,7 +29,6 @@ rulesets:
           required_review_thread_resolution: true
           allowed_merge_methods:
             - squash
-            - rebase # enabled while pre v1
     bypass_actors:
       - actor_id: 61227735
         actor_type: User
