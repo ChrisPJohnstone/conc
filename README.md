@@ -28,6 +28,12 @@ This is a simple utility to ease the suffering.
   git conc --type test "added test case"
   ```
   - Only accepts valus from [spec](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
+  - You only need to type enough for it to be unique
+    ```sh
+    git conc -t t "message"     # Resolves to 'test'
+    git conc -t f "message"     # Ambiguous as could be feat or fix
+    git conc -t fe "message"    # Resolves to 'feat'
+    ```
   - If unset tries to determine
     - Git branch name regexp `^{type}` for all types in spec. So `feature/....` would be `feat`
     - Falls back to `feat`
@@ -43,9 +49,6 @@ This is a simple utility to ease the suffering.
     git conc -s '-' "subject"
     ```
 - **NOT IMPLEMENTED**
-  - Support shorthand for types
-    - `-t d` resolves to `docs`
-    - `-t r` is ambiguous `refactor` / `revert`
   - Body & Footer support for commits
 
 ## Development
