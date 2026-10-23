@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/ChrisPJohnstone/go-conventional-commit/compare/v0.1.0...v0.2.0) (2026-10-23)
+
+
+### Features
+
+* added default type detection from branch ([#9](https://github.com/ChrisPJohnstone/go-conventional-commit/issues/9)) ([96effd5](https://github.com/ChrisPJohnstone/go-conventional-commit/commit/96effd5ca2dcb432409cf6681868bd3f9f7b203b))
+
 ## 0.1.0 (2026-10-22)
 
 ### Features
