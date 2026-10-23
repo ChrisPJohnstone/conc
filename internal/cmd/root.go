@@ -17,6 +17,12 @@ var rootCmd *cobra.Command = &cobra.Command{
 
 func init() {
 	flags := rootCmd.Flags()
+	flags.BoolP(
+		verboseFlag,
+		string(verboseFlag[0]),
+		false,
+		"enable verbose logging",
+	)
 	flags.StringP(
 		commitTypeFlag,
 		string(commitTypeFlag[0]),
