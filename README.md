@@ -10,18 +10,22 @@ This is a simple utility to ease the suffering.
   ```sh
   go install github.com/ChrisPJohnstone/go-conventional-commit/cmd/conc@latest
   ```
+- Create git alias
+  ```sh
+  git config --global alias.conc '!f() { git commit -m "$(conc "$@")"; }; f'
+  ```
 - Get help using the tool
   ```sh
-  conc --help
+  git conc --help
   ```
 - Positional arguments are concatenated together to create the subject of the message
   ```sh
-  conc added some new functions
+  git conc added some new functions
   ```
 - Accepts type as a flag.
   ```sh
-  conc -t fix "fixed some defect"
-  conc --type test "added test case"
+  git conc -t fix "fixed some defect"
+  git conc --type test "added test case"
   ```
   - Only accepts valus from [spec](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
   - If unset tries to determine
@@ -29,20 +33,19 @@ This is a simple utility to ease the suffering.
     - Falls back to `feat`
 - Accept scope as a flag
   ```sh
-  conc -s main "subject"
-  conc --scope TEST-123 "subject"
+  git conc -s main "subject"
+  git conc --scope TEST-123 "subject"
   ```
   - If unset tries to determine
     - Git branch name regexp `^[^/]*/([A-Z]*-\d*)`. Example: `feature/TEST-123...` scope would be `TEST-123`
   - Set as `-` to disable
     ```sh
-    conc -s '-' "subject"
+    git conc -s '-' "subject"
     ```
 - **NOT IMPLEMENTED**
   - Support shorthand for types
     - `-t d` resolves to `docs`
     - `-t r` is ambiguous `refactor` / `revert`
-  - Handle commit rather than just writing message to stdout
   - Body & Footer support for commits
 
 ## Development
