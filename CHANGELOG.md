@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/ChrisPJohnstone/go-conventional-commit/compare/v0.5.0...v0.5.1) (2026-10-23)
+
+
+### Bug Fixes
+
+* lint fixes ([#23](https://github.com/ChrisPJohnstone/go-conventional-commit/issues/23)) ([f3f019f](https://github.com/ChrisPJohnstone/go-conventional-commit/commit/f3f019feecb8425adf5f1821751f83fa4092e067))
+
 ## [0.5.0](https://github.com/ChrisPJohnstone/go-conventional-commit/compare/v0.4.0...v0.5.0) (2026-10-23)
 
 
