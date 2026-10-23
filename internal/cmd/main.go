@@ -33,7 +33,7 @@ func parseCommitType(
 			return matches[0], nil
 		default:
 			return commitTypeFallback, fmt.Errorf(
-				"'%s' is ambiguous: %s. Use a longer prefix\n",
+				"'%s' is ambiguous: %s. Use a longer prefix",
 				input,
 				strings.Join(matches, ", "),
 			)
