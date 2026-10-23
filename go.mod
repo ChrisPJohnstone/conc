@@ -1,4 +1,4 @@
-module github.com/ChrisPJohnstone/go-conventional-commit
+module github.com/ChrisPJohnstone/conc
 
 go 1.27.3
 

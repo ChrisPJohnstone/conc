@@ -8,7 +8,7 @@ This is a simple utility to ease the suffering.
 
 - Install with go
   ```sh
-  go install github.com/ChrisPJohnstone/go-conventional-commit/cmd/conc@latest
+  go install github.com/ChrisPJohnstone/conc@latest
   ```
 - Create git alias
   ```sh
@@ -27,7 +27,7 @@ This is a simple utility to ease the suffering.
   git conc -t fix "fixed some defect"
   git conc --type test "added test case"
   ```
-  - Only accepts valus from [spec](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
+  - Only accepts values from [spec](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
   - You only need to type enough for it to be unique
     ```sh
     git conc -t t "message"     # Resolves to 'test'
@@ -61,7 +61,7 @@ This is a simple utility to ease the suffering.
   make              # Compile binary locally
   make clean        # Remove local binary
   make install      # Install binary to go path
-  make uninstall    # Install binary to go path
+  make uninstall    # Remove binary from go path
   ```
 - Run linter locally in a container
   ```sh
