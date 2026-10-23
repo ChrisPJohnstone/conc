@@ -1,6 +1,6 @@
 # CONventional Commit (`conc`) Helper
 
-Typing conventional commit messages is a slightly tedious and I'm extremely lazy.
+Typing conventional commit messages is slightly tedious and I'm extremely lazy.
 
 This is a simple utility to ease the suffering.
 
