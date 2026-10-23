@@ -37,7 +37,7 @@ This is a simple utility to ease the suffering.
   - If unset tries to determine
     - Git branch name regexp `^{type}` for all types in spec. So `feature/....` would be `feat`
     - Falls back to `feat`
-- Accept scope as a flag
+- Accepts scope as a flag
   ```sh
   git conc -s main "subject"
   git conc --scope TEST-123 "subject"
@@ -48,8 +48,11 @@ This is a simple utility to ease the suffering.
     ```sh
     git conc -s '-' "subject"
     ```
-- **NOT IMPLEMENTED**
-  - Body & Footer support for commits
+- Accepts body and footer flags
+  ```sh
+  git conc "subject" -b "body" -f "footer"
+  git conc "subject" --body "body" --footer "footer"
+  ```
 
 ## Development
 
