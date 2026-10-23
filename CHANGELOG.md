@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/ChrisPJohnstone/conc/compare/v0.6.0...v1.0.0) (2026-10-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* repo rename & cleanup for v1.0.0 ([#27](https://github.com/ChrisPJohnstone/conc/issues/27))
+
+### Features
+
+* repo rename & cleanup for v1.0.0 ([#27](https://github.com/ChrisPJohnstone/conc/issues/27)) ([2296bc3](https://github.com/ChrisPJohnstone/conc/commit/2296bc3cb1eade4bcba5dfd9c71f591ac6f5d2d7))
+
 ## [0.6.0](https://github.com/ChrisPJohnstone/conc/compare/v0.5.1...v0.6.0) (2026-10-23)
 
 ### Features
