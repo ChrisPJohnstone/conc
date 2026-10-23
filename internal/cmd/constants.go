@@ -22,6 +22,10 @@ const (
 	scopeFlagSentinel  string = "-"
 	scopeFallback      string = ""
 	scopeBranchPattern string = `^[^/]*/([A-Z]*-[0-9]*).*`
+	bodyFlag           string = "body"
+	bodyFlagDefault    string = ""
+	footerFlag         string = "footer"
+	footerFlagDefault  string = ""
 )
 
 var commitTypes []string = []string{

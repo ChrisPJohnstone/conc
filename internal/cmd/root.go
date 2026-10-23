@@ -42,6 +42,18 @@ func init() {
 			scopeFlagSentinel,
 		),
 	)
+	flags.StringP(
+		bodyFlag,
+		string(bodyFlag[0]),
+		bodyFlagDefault,
+		"add a body to the commit message",
+	)
+	flags.StringP(
+		footerFlag,
+		string(footerFlag[0]),
+		footerFlagDefault,
+		"add a footer to the commit message",
+	)
 }
 
 func Execute() {

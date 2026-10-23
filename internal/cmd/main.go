@@ -119,6 +119,23 @@ func main(cmd *cobra.Command, args []string) error {
 		message = fmt.Sprintf("%s(%s)", message, scope)
 	}
 	message = fmt.Sprintf("%s: %s", message, subject)
+
+	body, err := flags.GetString(bodyFlag)
+	if err != nil {
+		return err
+	}
+	if body != "" {
+		message = fmt.Sprintf("%s\n\n%s", message, body)
+	}
+
+	footer, err := flags.GetString(footerFlag)
+	if err != nil {
+		return err
+	}
+	if footer != "" {
+		message = fmt.Sprintf("%s\n\n%s", message, footer)
+	}
+
 	fmt.Printf("%s\n", message)
 	return nil
 }
