@@ -1,10 +1,21 @@
 package cmd
 
 import (
+	"io"
+	"log"
+	"os"
 	"slices"
 
 	"github.com/go-git/go-git/v6"
 )
+
+func newLogger(verbose bool) *log.Logger {
+	if verbose {
+		return log.New(os.Stderr, "", log.LstdFlags)
+	} else {
+		return log.New(io.Discard, "", 0)
+	}
+}
 
 func isValidCommitType(commitType string) bool {
 	return slices.Contains(commitTypes, commitType)

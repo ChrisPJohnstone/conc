@@ -2,9 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"io"
-	"log"
-	"os"
 	"regexp"
 	"strings"
 
@@ -38,12 +35,8 @@ func main(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	if verbose {
-		logger = log.New(os.Stderr, "", log.LstdFlags)
-		logger.Printf("Verbose logging enabled\n")
-	} else {
-		logger = log.New(io.Discard, "", 0)
-	}
+	logger = newLogger(verbose)
+	logger.Printf("Verbose logging enabled\n")
 	commitType, err := flags.GetString(commitTypeFlag)
 	logger.Printf("Type flag value: '%s'\n", commitType)
 	if err != nil {
