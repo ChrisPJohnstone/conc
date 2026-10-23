@@ -39,7 +39,13 @@ func parseScope(branch string, branchErr error) (string, error) {
 		)
 		return scopeFallback, nil
 	}
-	fmt.Printf("TODO: Parse branch\n")
+	pattern := regexp.MustCompile(scopeBranchPattern)
+	matches := pattern.FindStringSubmatch(branch)
+	if len(matches) == 2 {
+		scope := matches[1]
+		logger.Printf("Branch name matches pattern, found scope: '%s'\n", scope)
+		return scope, nil
+	}
 	return scopeFallback, nil
 }
 
