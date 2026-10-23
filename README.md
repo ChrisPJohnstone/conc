@@ -28,6 +28,9 @@ This is a simple utility to ease the suffering.
     - Branch name regexp `^{type}` for all types in spec. So `feature/....` would be `feat`
     - Falls back to `feat`
 - **NOT IMPLEMENTED**
+  - Support shorthand for types
+    - `-t d` resolves to `docs`
+    - `-t r` is ambiguous `refactor` / `revert`
   - Handle commit rather than just writing message to stdout
   - Read ticket number from branch `feat(TEST-123): ...`
   - Body & Footer support for commits
