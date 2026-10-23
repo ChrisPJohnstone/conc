@@ -6,6 +6,7 @@ import (
 	"slices"
 	"strings"
 
+	"github.com/go-git/go-git/v6"
 	"github.com/spf13/cobra"
 )
 
@@ -41,6 +42,8 @@ func main(cmd *cobra.Command, args []string) error {
 	}
 	subject := strings.Join(args, " ")
 	fmt.Printf("%s: %s\n", commitType, subject)
+	repo, err := git.PlainOpen(".")
+	fmt.Printf("%s\n", repo)
 	return nil
 }
 
