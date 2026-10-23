@@ -20,8 +20,7 @@ func parseCommitType(branch string, branchErr error) (string, error) {
 	}
 	logger.Printf("Checking branch name '%s' for type prefix\n", branch)
 	for _, commitType := range commitTypes {
-		pattern := regexp.MustCompile("^" + commitType)
-		if pattern.MatchString(branch) {
+		if strings.HasPrefix(branch, commitType) {
 			return commitType, nil
 		}
 	}
