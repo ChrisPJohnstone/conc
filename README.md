@@ -53,18 +53,3 @@ This is a simple utility to ease the suffering.
   git conc "subject" -b "body" -f "footer"
   git conc "subject" --body "body" --footer "footer"
   ```
-
-## Development
-
-- The [`Makefile`](./Makefile) handles most things to do with compilation, installation & cleanup
-  ```sh
-  make              # Compile binary locally
-  make clean        # Remove local binary
-  make install      # Install binary to go path
-  make uninstall    # Remove binary from go path
-  ```
-- Run linter locally in a container
-  ```sh
-  make lint                         # Defaults to `podman`
-  make lint CONTAINER_ENGINE=docker # Run linter in docker
-  ```
