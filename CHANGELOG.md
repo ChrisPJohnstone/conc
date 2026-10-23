@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/ChrisPJohnstone/go-conventional-commit/compare/v0.4.0...v0.5.0) (2026-10-23)
+
+
+### Features
+
+* added type prefix matching ([#21](https://github.com/ChrisPJohnstone/go-conventional-commit/issues/21)) ([63c5307](https://github.com/ChrisPJohnstone/go-conventional-commit/commit/63c53075434423b2bab9c8c2a8bc23f0fecb6f7c))
+
 ## [0.4.0](https://github.com/ChrisPJohnstone/go-conventional-commit/compare/v0.3.0...v0.4.0) (2026-10-23)
 
 
