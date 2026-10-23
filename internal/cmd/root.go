@@ -43,7 +43,14 @@ func main(cmd *cobra.Command, args []string) error {
 	subject := strings.Join(args, " ")
 	fmt.Printf("%s: %s\n", commitType, subject)
 	repo, err := git.PlainOpen(".")
-	fmt.Printf("%s\n", repo)
+	if err != nil {
+		return err
+	}
+	head, err := repo.Head()
+	if err != nil {
+		return err
+	}
+	fmt.Printf("%s\n", head.Name())
 	return nil
 }
 
