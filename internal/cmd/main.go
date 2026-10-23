@@ -56,9 +56,20 @@ func main(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("'%s' is not a valid commit type", commitType)
 	}
 
+	scope, err := flags.GetString(scopeFlag)
+	if err != nil {
+		return err
+	}
+	// TODO: Add smart scope parsing
+
 	subject := strings.Join(args, " ")
 	logger.Printf("Subject: '%s'\n", subject)
 
-	fmt.Printf("%s: %s\n", commitType, subject)
+	message := commitType
+	if scope != "" && scope != scopeFlagSentinel {
+		message = fmt.Sprintf("%s(%s)", message, scope)
+	}
+	message = fmt.Sprintf("%s: %s", message, subject)
+	fmt.Printf("%s\n", message)
 	return nil
 }
