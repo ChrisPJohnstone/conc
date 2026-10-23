@@ -24,15 +24,25 @@ This is a simple utility to ease the suffering.
   conc --type test "added test case"
   ```
   - Only accepts valus from [spec](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
-  - Tries to determine default
+  - If unset tries to determine default
     - Branch name regexp `^{type}` for all types in spec. So `feature/....` would be `feat`
     - Falls back to `feat`
+- Accept scope as a flag
+  ```sh
+  conc -s main "subject"
+  conc --scope TEST-123 "subject"
+  ```
+  - Set as `-` to disable auto-parsing
+    ```sh
+    conc -s '-' "subject"
+    ```
 - **NOT IMPLEMENTED**
   - Support shorthand for types
     - `-t d` resolves to `docs`
     - `-t r` is ambiguous `refactor` / `revert`
   - Handle commit rather than just writing message to stdout
   - Read ticket number from branch `feat(TEST-123): ...`
+    - Branch name regexp `^[^/]*/([A-Z]*-\d*)`. Example: `feature/TEST-123...` scope would be `TEST-123`
   - Body & Footer support for commits
 
 ## Development
