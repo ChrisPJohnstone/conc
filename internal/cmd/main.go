@@ -14,7 +14,12 @@ import (
 func commitTypeDefault() (string, error) {
 	branch, err := gitBranch()
 	if err != nil {
-		return "", err
+		logger.Printf(
+			"Error getting branch: '%s'. Falling back to '%s'\n",
+			err,
+			commitTypeFallback,
+		)
+		return commitTypeFallback, err
 	}
 	logger.Printf("Checking branch name '%s' for type prefix\n", branch)
 	for _, commitType := range commitTypes {
