@@ -16,7 +16,7 @@ This is a simple utility to ease the suffering.
   ```
 - Get help using the tool
   ```sh
-  git conc --help
+  conc --help
   ```
 - Positional arguments are concatenated together to create the subject of the message
   ```sh
