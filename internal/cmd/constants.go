@@ -17,6 +17,9 @@ const (
 	commitTypeRevert   string = "revert"
 	commitTypeStyle    string = "style"
 	commitTypeTest     string = "test"
+	scopeFlag          string = "scope"
+	scopeFlagDefault   string = ""
+	scopeFlagSentinel  string = "-"
 )
 
 var commitTypes []string = []string{

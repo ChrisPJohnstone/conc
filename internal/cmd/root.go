@@ -28,9 +28,18 @@ func init() {
 		string(commitTypeFlag[0]),
 		"",
 		fmt.Sprintf(
-			"commit type (valid: %s). If unset will attempt to detect from branch. Fallback is %s",
+			"commit type (valid: %s). If unset will attempt to detect from branch. Fallback is '%s'",
 			strings.Join(commitTypes, ", "),
 			commitTypeFallback,
+		),
+	)
+	flags.StringP(
+		scopeFlag,
+		string(scopeFlag[0]),
+		scopeFlagDefault,
+		fmt.Sprintf(
+			"Scope for commit message. If unset will attempt to detect from branch. Use '%s' to disable",
+			scopeFlagSentinel,
 		),
 	)
 }
