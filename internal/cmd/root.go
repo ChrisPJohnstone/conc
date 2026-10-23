@@ -31,6 +31,19 @@ func init() {
 	)
 }
 
+func gitBranch() (string, error) {
+	repo, err := git.PlainOpen(".")
+	if err != nil {
+		return "", err
+	}
+	ref, err := repo.Head()
+	if err != nil {
+		return "", err
+	}
+	branch := ref.Name().Short()
+	return branch, nil
+}
+
 func main(cmd *cobra.Command, args []string) error {
 	flags := cmd.Flags()
 	commitType, err := flags.GetString("type")
@@ -42,15 +55,11 @@ func main(cmd *cobra.Command, args []string) error {
 	}
 	subject := strings.Join(args, " ")
 	fmt.Printf("%s: %s\n", commitType, subject)
-	repo, err := git.PlainOpen(".")
+	branch, err := gitBranch()
 	if err != nil {
 		return err
 	}
-	head, err := repo.Head()
-	if err != nil {
-		return err
-	}
-	fmt.Printf("%s\n", head.Name())
+	fmt.Printf("%s\n", branch)
 	return nil
 }
 
