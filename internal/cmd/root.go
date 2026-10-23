@@ -20,8 +20,12 @@ func init() {
 	flags.StringP(
 		commitTypeFlag,
 		string(commitTypeFlag[0]),
-		commitTypeFlagDefault,
-		fmt.Sprintf("commit type (valid: %s)", strings.Join(commitTypes, ", ")),
+		"",
+		fmt.Sprintf(
+			"commit type (valid: %s). If unset will attempt to detect from branch. Fallback is %s",
+			strings.Join(commitTypes, ", "),
+			commitTypeFallback,
+		),
 	)
 }
 

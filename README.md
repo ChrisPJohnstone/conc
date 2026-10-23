@@ -18,15 +18,18 @@ This is a simple utility to ease the suffering.
   ```sh
   conc added some new functions
   ```
-- Accepts type as a flag. Only accepts valus from [spec](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
+- Accepts type as a flag.
   ```sh
   conc -t fix "fixed some defect"
   conc --type test "added test case"
   ```
+  - Only accepts valus from [spec](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
+  - Tries to determine default
+    - Branch name regexp `^{type}` for all types in spec. So `feature/....` would be `feat`
+    - Falls back to `feat`
 - **NOT IMPLEMENTED**
   - Handle commit rather than just writing message to stdout
   - Read ticket number from branch `feat(TEST-123): ...`
-  - Read type from branch? `feature/TEST-123`
   - Body & Footer support for commits
 
 ## Development
