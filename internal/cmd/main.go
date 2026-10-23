@@ -9,13 +9,14 @@ import (
 )
 
 func parseCommitType(branch string, branchErr error) (string, error) {
+	logger.Printf("Attempting to parse commit type\n")
 	if branchErr != nil {
 		logger.Printf(
 			"Error getting branch: '%s'. Falling back to '%s'\n",
 			branchErr,
 			commitTypeFallback,
 		)
-		return commitTypeFallback, branchErr
+		return commitTypeFallback, nil
 	}
 	logger.Printf("Checking branch name '%s' for type prefix\n", branch)
 	for _, commitType := range commitTypes {
