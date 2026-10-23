@@ -18,7 +18,7 @@ const (
 	commitTypeTest        string = "test"
 )
 
-var commitTypes = []string{
+var commitTypes []string = []string{
 	commitTypeBuild,
 	commitTypeChore,
 	commitTypeCi,

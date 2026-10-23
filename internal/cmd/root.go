@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var rootCmd = &cobra.Command{
+var rootCmd *cobra.Command = &cobra.Command{
 	Use:   cmdName,
 	Short: cmdShortHelp,
 	Args:  cobra.MinimumNArgs(1),
