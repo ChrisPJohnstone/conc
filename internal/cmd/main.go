@@ -8,8 +8,37 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func parseCommitType(branch string, branchErr error) (string, error) {
+func parseCommitType(
+	input string,
+	branch string,
+	branchErr error,
+) (string, error) {
 	logger.Printf("Attempting to parse commit type\n")
+	if input != "" {
+		logger.Printf("Type flag specified: '%s'\n", input)
+		var matches []string
+		for _, commitType := range commitTypes {
+			if strings.HasPrefix(commitType, input) {
+				logger.Printf("Flag matches '%s'\n", commitType)
+				matches = append(matches, commitType)
+			}
+		}
+		switch len(matches) {
+		case 0:
+			return commitTypeFallback, fmt.Errorf(
+				"'%s' is not a valid commit type",
+				input,
+			)
+		case 1:
+			return matches[0], nil
+		default:
+			return commitTypeFallback, fmt.Errorf(
+				"'%s' is ambiguous: %s. Use a longer prefix\n",
+				input,
+				strings.Join(matches, ", "),
+			)
+		}
+	}
 	if branchErr != nil {
 		logger.Printf(
 			"Error getting branch: '%s'. Falling back to '%s'\n",
@@ -60,27 +89,22 @@ func main(cmd *cobra.Command, args []string) error {
 
 	branch, branchErr := gitBranch()
 
-	commitType, err := flags.GetString(commitTypeFlag)
-	logger.Printf("Type flag value: '%s'\n", commitType)
+	commitTypeFlagVal, err := flags.GetString(commitTypeFlag)
 	if err != nil {
 		return err
 	}
-	if commitType == "" {
-		logger.Printf("Type flag not specified")
-		commitType, err = parseCommitType(branch, branchErr)
-		if err != nil {
-			return err
-		}
-	}
-	if !isValidCommitType(commitType) {
-		return fmt.Errorf("'%s' is not a valid commit type", commitType)
+	commitType, err := parseCommitType(commitTypeFlagVal, branch, branchErr)
+	if err != nil {
+		return err
 	}
 
 	scope, err := flags.GetString(scopeFlag)
+	logger.Printf("Scope flag value: '%s'\n", scope)
 	if err != nil {
 		return err
 	}
 	if scope == "" {
+		logger.Printf("Scope flag not provided, attempting to parse")
 		scope, err = parseScope(branch, branchErr)
 		if err != nil {
 			return err
