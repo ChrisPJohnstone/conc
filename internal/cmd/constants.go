@@ -20,6 +20,8 @@ const (
 	scopeFlag          string = "scope"
 	scopeFlagDefault   string = ""
 	scopeFlagSentinel  string = "-"
+	scopeFallback      string = ""
+	scopeBranchPattern string = `^[^/]*/([A-Z]*-[0-9]*).*`
 )
 
 var commitTypes []string = []string{

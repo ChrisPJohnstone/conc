@@ -29,6 +29,26 @@ func parseCommitType(branch string, branchErr error) (string, error) {
 	return commitTypeFallback, nil
 }
 
+func parseScope(branch string, branchErr error) (string, error) {
+	logger.Printf("Attempting to parse scope\n")
+	if branchErr != nil {
+		logger.Printf(
+			"Error getting branch: '%s'. Falling back to '%s'\n",
+			branchErr,
+			scopeFallback,
+		)
+		return scopeFallback, nil
+	}
+	pattern := regexp.MustCompile(scopeBranchPattern)
+	matches := pattern.FindStringSubmatch(branch)
+	if len(matches) == 2 {
+		scope := matches[1]
+		logger.Printf("Branch name matches pattern, found scope: '%s'\n", scope)
+		return scope, nil
+	}
+	return scopeFallback, nil
+}
+
 func main(cmd *cobra.Command, args []string) error {
 	flags := cmd.Flags()
 
@@ -47,7 +67,7 @@ func main(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	if commitType == "" {
-		logger.Printf("Type flag not specified, determining default")
+		logger.Printf("Type flag not specified")
 		commitType, err = parseCommitType(branch, branchErr)
 		if err != nil {
 			return err
@@ -61,7 +81,12 @@ func main(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	// TODO: Add smart scope parsing
+	if scope == "" {
+		scope, err = parseScope(branch, branchErr)
+		if err != nil {
+			return err
+		}
+	}
 
 	subject := strings.Join(args, " ")
 	logger.Printf("Subject: '%s'\n", subject)
