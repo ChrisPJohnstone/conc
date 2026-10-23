@@ -20,6 +20,7 @@ const (
 	scopeFlag          string = "scope"
 	scopeFlagDefault   string = ""
 	scopeFlagSentinel  string = "-"
+	scopeFallback      string = ""
 )
 
 var commitTypes []string = []string{
