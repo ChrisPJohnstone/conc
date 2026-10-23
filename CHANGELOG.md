@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.0](https://github.com/ChrisPJohnstone/go-conventional-commit/compare/v0.3.0...v0.4.0) (2026-10-23)
+
+
+### Features
+
+* added scope parsing from git branch ([#18](https://github.com/ChrisPJohnstone/go-conventional-commit/issues/18)) ([7a7935b](https://github.com/ChrisPJohnstone/go-conventional-commit/commit/7a7935b974bcdd301ef5f53a6b69eff2eec7f123))
+
+
+### Bug Fixes
+
+* fixed parseCommitType returning git branch err ([#16](https://github.com/ChrisPJohnstone/go-conventional-commit/issues/16)) ([89b5181](https://github.com/ChrisPJohnstone/go-conventional-commit/commit/89b5181a8a1344acde5ef055ed9f33b6cce3b75c))
+
 ## [0.3.0](https://github.com/ChrisPJohnstone/go-conventional-commit/compare/v0.2.0...v0.3.0) (2026-10-23)
 
 
