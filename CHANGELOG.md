@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/ChrisPJohnstone/go-conventional-commit/compare/v0.5.1...v0.6.0) (2026-10-23)
+
+
+### Features
+
+* added body and footer flags ([#25](https://github.com/ChrisPJohnstone/go-conventional-commit/issues/25)) ([95f8946](https://github.com/ChrisPJohnstone/go-conventional-commit/commit/95f8946f9e4468103fc9fa1f44e90c65515f2556))
+
 ## [0.5.1](https://github.com/ChrisPJohnstone/go-conventional-commit/compare/v0.5.0...v0.5.1) (2026-10-23)
 
 
