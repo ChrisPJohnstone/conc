@@ -8,7 +8,7 @@ This is a simple utility to ease the suffering.
 
 - Install with go
   ```sh
-  go install github.com/ChrisPJohnstone/go-conventional-commit/cmd/conc@latest
+  go install github.com/ChrisPJohnstone/conc@latest
   ```
 - Create git alias
   ```sh
