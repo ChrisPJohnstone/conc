@@ -22,9 +22,8 @@ func GetCommitTypes() []string {
 	}
 }
 
-func (msg *Message) commitTypeFromInput() error {
+func (msg *Message) commitTypeFromInput(commitTypes []string) error {
 	slog.Debug(fmt.Sprintf("Type flag specified: '%s'", msg.CommitType))
-	commitTypes := GetCommitTypes()
 	var matches []string
 	for _, commitType := range commitTypes {
 		if strings.HasPrefix(commitType, msg.CommitType) {
@@ -34,26 +33,22 @@ func (msg *Message) commitTypeFromInput() error {
 	}
 	switch len(matches) {
 	case 0:
-		return fmt.Errorf(
-			"'%s' is not a valid commit type",
-			msg.CommitType,
-		)
+		return fmt.Errorf("'%s' is not a valid commit type", msg.CommitType)
 	case 1:
 		msg.CommitType = matches[0]
 		return nil
 	default:
 		return fmt.Errorf(
-			"'%s' is ambiguous: %s. Use a longer prefix",
+			"'%s' is ambiguous: %s",
 			msg.CommitType,
 			strings.Join(matches, ", "),
 		)
 	}
 }
 
-func (msg *Message) commitTypeFromBranch() error {
+func (msg *Message) commitTypeFromBranch(commitTypes []string) error {
 	// TODO: Support prefix / fuzzy
 	slog.Debug(fmt.Sprintf("Checking branch name '%s' for type", msg.branch))
-	commitTypes := GetCommitTypes()
 	for _, commitType := range commitTypes {
 		if strings.HasPrefix(msg.branch, commitType) {
 			msg.CommitType = commitType
@@ -67,14 +62,15 @@ func (msg *Message) commitTypeFromBranch() error {
 
 func (msg *Message) parseCommitType() error {
 	slog.Debug("Attempting to parse commit type")
+	commitTypes := GetCommitTypes()
 	if msg.CommitType != "" {
-		return msg.commitTypeFromInput()
+		return msg.commitTypeFromInput(commitTypes)
 	}
 	if !msg.hasBranch {
 		msg.getGitBranch()
 	}
 	if msg.branchErr == nil {
-		return msg.commitTypeFromBranch()
+		return msg.commitTypeFromBranch(commitTypes)
 	} else {
 		slog.Debug("Error getting git branch", "error", msg.branchErr)
 	}
