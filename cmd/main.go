@@ -77,37 +77,6 @@ func parseScope(branch string, branchErr error) (string, error) {
 	return scopeFallback, nil
 }
 
-func parseMessage(
-	commitType string,
-	scope string,
-	subject string,
-	body string,
-	footer string,
-) string {
-	logger.Printf("Starting message with commit type '%s'\n", scope)
-	message := commitType
-	logger.Printf("Message: '%s'\n", scope)
-	if scope != "" && scope != scopeFlagSentinel {
-		logger.Printf("Adding scope '%s' to message\n", scope)
-		message = fmt.Sprintf("%s(%s)", message, scope)
-		logger.Printf("Message: '%s'\n", scope)
-	}
-	logger.Printf("Adding subject '%s' to message\n", subject)
-	message = fmt.Sprintf("%s: %s", message, subject)
-	logger.Printf("Message: '%s'\n", scope)
-	if body != "" {
-		logger.Printf("Adding body '%s' to message\n", body)
-		message = fmt.Sprintf("%s\n\n%s", message, body)
-		logger.Printf("Message: '%s'\n", scope)
-	}
-	if footer != "" {
-		logger.Printf("Adding footer '%s' to message\n", footer)
-		message = fmt.Sprintf("%s\n\n%s", message, footer)
-		logger.Printf("Message: '%s'\n", scope)
-	}
-	return message
-}
-
 func main(cmd *cobra.Command, args []string) error {
 	flags := cmd.Flags()
 
@@ -118,48 +87,49 @@ func main(cmd *cobra.Command, args []string) error {
 	logger = newLogger(verbose)
 	logger.Printf("Verbose logging enabled\n")
 
-	subject := strings.Join(args, " ")
-	logger.Printf("Raw subject: '%s'\n", subject)
-	commitType, err := flags.GetString(commitTypeFlag)
+	msg := &message{}
+	msg.subject = strings.Join(args, " ")
+	logger.Printf("Raw subject: '%s'\n", msg.subject)
+	msg.commitType, err = flags.GetString(commitTypeFlag)
 	if err != nil {
 		return err
 	}
-	logger.Printf("Raw commitType: '%s'\n", commitType)
-	scope, err := flags.GetString(scopeFlag)
+	logger.Printf("Raw commitType: '%s'\n", msg.commitType)
+	msg.scope, err = flags.GetString(scopeFlag)
 	if err != nil {
 		return err
 	}
-	logger.Printf("Raw scope: '%s'\n", scope)
-	body, err := flags.GetString(bodyFlag)
+	logger.Printf("Raw scope: '%s'\n", msg.scope)
+	msg.body, err = flags.GetString(bodyFlag)
 	if err != nil {
 		return err
 	}
-	logger.Printf("Raw body: '%s'\n", body)
-	footer, err := flags.GetString(footerFlag)
+	logger.Printf("Raw body: '%s'\n", msg.body)
+	msg.footer, err = flags.GetString(footerFlag)
 	if err != nil {
 		return err
 	}
-	logger.Printf("Raw footer: '%s'\n", footer)
+	logger.Printf("Raw footer: '%s'\n", msg.footer)
 
 	branch, branchErr := gitBranch()
 	if branchErr != nil {
 		logger.Printf("Git branch error: '%s'", branchErr)
 	}
-	commitType, err = parseCommitType(commitType, branch, branchErr)
+	msg.commitType, err = parseCommitType(msg.commitType, branch, branchErr)
 	if err != nil {
 		return err
 	}
-	logger.Printf("Parsed commit type: '%s'\n", commitType)
-	if scope == "" {
+	logger.Printf("Parsed commit type: '%s'\n", msg.commitType)
+	if msg.scope == "" {
 		logger.Printf("Scope value blank, attempting to parse\n")
-		scope, err = parseScope(branch, branchErr)
+		msg.scope, err = parseScope(branch, branchErr)
 		if err != nil {
 			return err
 		}
-		logger.Printf("Parsed scope: '%s'\n", scope)
+		logger.Printf("Parsed scope: '%s'\n", msg.scope)
 	}
 
-	message := parseMessage(commitType, scope, subject, body, footer)
+	message := msg.string()
 	logger.Printf("Full message: '%s'\n", message)
 	fmt.Printf("%s\n", message)
 	return nil
