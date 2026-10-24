@@ -22,7 +22,7 @@ type Message struct {
 }
 
 func (msg *Message) getGitBranch() {
-	slog.Debug("Attempting to get git branch\n")
+	slog.Debug("Attempting to get git branch")
 	msg.branch, msg.branchErr = git.GitBranch()
 	msg.hasBranch = true
 	if msg.branchErr != nil {
@@ -32,15 +32,15 @@ func (msg *Message) getGitBranch() {
 
 func (msg *Message) parseCommitType() error {
 	slog.Debug(fmt.Sprintf(
-		"Attempting to parse commit type: '%s'\n",
+		"Attempting to parse commit type: '%s'",
 		msg.CommitType,
 	))
 	if msg.CommitType != "" {
-		slog.Debug(fmt.Sprintf("Type flag specified: '%s'\n", msg.CommitType))
+		slog.Debug(fmt.Sprintf("Type flag specified: '%s'", msg.CommitType))
 		var matches []string
 		for _, commitType := range globals.CommitTypes {
 			if strings.HasPrefix(commitType, msg.CommitType) {
-				slog.Debug(fmt.Sprintf("Flag matches '%s'\n", commitType))
+				slog.Debug(fmt.Sprintf("Flag matches '%s'", commitType))
 				matches = append(matches, commitType)
 			}
 		}
@@ -66,21 +66,21 @@ func (msg *Message) parseCommitType() error {
 	}
 	if msg.branchErr != nil {
 		slog.Debug(fmt.Sprintf(
-			"Error getting branch: '%s'. Using fallback\n",
+			"Error getting branch: '%s'. Using fallback",
 			msg.branchErr,
 		))
 		msg.CommitType = globals.CommitTypeFallback
 		return nil
 	}
 	// TODO: Support prefix / fuzzy
-	slog.Debug(fmt.Sprintf("Checking branch name '%s' for type\n", msg.branch))
+	slog.Debug(fmt.Sprintf("Checking branch name '%s' for type", msg.branch))
 	for _, commitType := range globals.CommitTypes {
 		if strings.HasPrefix(msg.branch, commitType) {
 			msg.CommitType = commitType
 			return nil
 		}
 	}
-	slog.Debug("No type matched. Using fallback\n")
+	slog.Debug("No type matched. Using fallback")
 	msg.CommitType = globals.CommitTypeFallback
 	return nil
 }
@@ -88,18 +88,18 @@ func (msg *Message) parseCommitType() error {
 func (msg *Message) parseScope() {
 	if msg.Scope != "" || msg.Scope == globals.ScopeFlagSentinel {
 		slog.Debug(fmt.Sprintf(
-			"Scope provided: '%s'. Parse not required\n",
+			"Scope provided: '%s'. Parse not required",
 			msg.Scope,
 		))
 		return
 	}
-	slog.Debug(fmt.Sprintf("Attempting to parse scope: '%s'\n", msg.Scope))
+	slog.Debug(fmt.Sprintf("Attempting to parse scope: '%s'", msg.Scope))
 	if !msg.hasBranch {
 		msg.getGitBranch()
 	}
 	if msg.branchErr != nil {
 		slog.Debug(fmt.Sprintf(
-			"Error getting branch: '%s'. Falling back to '%s'\n",
+			"Error getting branch: '%s'. Falling back to '%s'",
 			msg.branchErr,
 			scopeFallback,
 		))
@@ -111,7 +111,7 @@ func (msg *Message) parseScope() {
 	if len(matches) == 2 {
 		msg.Scope = matches[1]
 		slog.Debug(fmt.Sprintf(
-			"Branch name matches pattern, found scope: '%s'\n",
+			"Branch name matches pattern, found scope: '%s'",
 			msg.Scope,
 		))
 		return
@@ -123,9 +123,9 @@ func (msg *Message) Parse() error {
 	if err != nil {
 		return err
 	}
-	slog.Debug(fmt.Sprintf("Parsed commit type: '%s'\n", msg.CommitType))
+	slog.Debug(fmt.Sprintf("Parsed commit type: '%s'", msg.CommitType))
 	msg.parseScope()
-	slog.Debug(fmt.Sprintf("Parsed scope: '%s'\n", msg.Scope))
+	slog.Debug(fmt.Sprintf("Parsed scope: '%s'", msg.Scope))
 	return nil
 }
 

@@ -72,7 +72,7 @@ func setupLogging(cmd *cobra.Command, args []string) error {
 		logger := slog.New(handler)
 		slog.SetDefault(logger)
 	}
-	slog.Debug("Verbose logging enabled\n")
+	slog.Debug("Verbose logging enabled")
 	return nil
 }
 
