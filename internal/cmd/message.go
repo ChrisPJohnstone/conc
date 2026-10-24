@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+
+	"github.com/ChrisPJohnstone/conc/internal/globals"
 )
 
 type message struct {
@@ -31,7 +33,7 @@ func (msg *message) parseCommitType() error {
 	if msg.CommitType != "" {
 		logger.Printf("Type flag specified: '%s'\n", msg.CommitType)
 		var matches []string
-		for _, commitType := range commitTypes {
+		for _, commitType := range globals.CommitTypes {
 			if strings.HasPrefix(commitType, msg.CommitType) {
 				logger.Printf("Flag matches '%s'\n", commitType)
 				matches = append(matches, commitType)
@@ -59,28 +61,27 @@ func (msg *message) parseCommitType() error {
 	}
 	if msg.branchErr != nil {
 		logger.Printf(
-			"Error getting branch: '%s'. Falling back to '%s'\n",
+			"Error getting branch: '%s'. Using fallback\n",
 			msg.branchErr,
-			commitTypeFallback,
 		)
-		msg.CommitType = commitTypeFallback
+		msg.CommitType = globals.CommitTypeFallback
 		return nil
 	}
 	// TODO: Support prefix / fuzzy
 	logger.Printf("Checking branch name '%s' for type\n", msg.branch)
-	for _, commitType := range commitTypes {
+	for _, commitType := range globals.CommitTypes {
 		if strings.HasPrefix(msg.branch, commitType) {
 			msg.CommitType = commitType
 			return nil
 		}
 	}
-	logger.Printf("No type matched, falling back to '%s'\n", commitTypeFallback)
-	msg.CommitType = commitTypeFallback
+	logger.Printf("No type matched. Ussing fallback\n")
+	msg.CommitType = globals.CommitTypeFallback
 	return nil
 }
 
 func (msg *message) parseScope() {
-	if msg.Scope != "" || msg.Scope == scopeFlagSentinel {
+	if msg.Scope != "" || msg.Scope == globals.ScopeFlagSentinel {
 		logger.Printf("Scope provided: '%s'. Parse not required\n", msg.Scope)
 		return
 	}
@@ -122,7 +123,7 @@ func (msg *message) Parse() error {
 
 func (msg *message) String() string {
 	message := msg.CommitType
-	if msg.Scope != "" && msg.Scope != scopeFlagSentinel {
+	if msg.Scope != "" && msg.Scope != globals.ScopeFlagSentinel {
 		message = fmt.Sprintf("%s(%s)", message, msg.Scope)
 	}
 	message = fmt.Sprintf("%s: %s", message, msg.Subject)
