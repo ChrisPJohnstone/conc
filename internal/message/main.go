@@ -26,7 +26,7 @@ func (msg *Message) getGitBranch() {
 	msg.branch, msg.branchErr = git.GitBranch()
 	msg.hasBranch = true
 	if msg.branchErr != nil {
-		slog.Debug(fmt.Sprintf("Error getting git branch: '%s'", msg.branchErr))
+		slog.Debug("Error getting git branch", "error", msg.branchErr)
 	}
 }
 
@@ -65,10 +65,11 @@ func (msg *Message) parseCommitType() error {
 		msg.getGitBranch()
 	}
 	if msg.branchErr != nil {
-		slog.Debug(fmt.Sprintf(
-			"Error getting branch: '%s'. Using fallback",
+		slog.Debug(
+			"Error getting branch. Using fallback",
+			"error",
 			msg.branchErr,
-		))
+		)
 		msg.CommitType = globals.CommitTypeFallback
 		return nil
 	}
@@ -98,11 +99,11 @@ func (msg *Message) parseScope() {
 		msg.getGitBranch()
 	}
 	if msg.branchErr != nil {
-		slog.Debug(fmt.Sprintf(
-			"Error getting branch: '%s'. Falling back to '%s'",
+		slog.Debug(
+			"Error getting branch. Using fallback",
+			"error",
 			msg.branchErr,
-			scopeFallback,
-		))
+		)
 		msg.Scope = scopeFallback
 		return
 	}
