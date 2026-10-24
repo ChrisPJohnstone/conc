@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"io"
 	"log/slog"
 	"os"
 	"strings"
@@ -67,15 +66,12 @@ func setupLogging(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	var handler slog.Handler
 	if verbose {
 		opts := &slog.HandlerOptions{Level: slog.LevelDebug}
-		handler = slog.NewJSONHandler(os.Stderr, opts)
-	} else {
-		handler = slog.NewJSONHandler(io.Discard, nil)
+		handler := slog.NewJSONHandler(os.Stderr, opts)
+		logger := slog.New(handler)
+		slog.SetDefault(logger)
 	}
-	logger := slog.New(handler)
-	slog.SetDefault(logger)
 	slog.Debug("Verbose logging enabled\n")
 	return nil
 }
