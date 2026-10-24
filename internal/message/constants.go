@@ -17,17 +17,3 @@ const (
 	scopeBranchPattern string = `^[^/]*/([A-Z]*-[0-9]*).*`
 	scopeFallback      string = ""
 )
-
-var CommitTypes []string = []string{
-	commitTypeBuild,
-	commitTypeChore,
-	commitTypeCi,
-	commitTypeDocs,
-	commitTypeFeat,
-	commitTypeFix,
-	commitTypePerf,
-	commitTypeRefactor,
-	commitTypeRevert,
-	commitTypeStyle,
-	commitTypeTest,
-}

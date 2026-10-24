@@ -33,7 +33,7 @@ func init() {
 		"",
 		fmt.Sprintf(
 			"commit type\noptions: %s\nif unset will attempt to detect from branch\nfallback is '%s'",
-			strings.Join(message.CommitTypes, ", "),
+			strings.Join(message.GetCommitTypes(), ", "),
 			message.CommitTypeFallback,
 		),
 	)
