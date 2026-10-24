@@ -77,6 +77,27 @@ func parseScope(branch string, branchErr error) (string, error) {
 	return scopeFallback, nil
 }
 
+func parseMessage(
+	commitType string,
+	scope string,
+	subject string,
+	body string,
+	footer string,
+) string {
+	message := commitType
+	if scope != "" && scope != scopeFlagSentinel {
+		message = fmt.Sprintf("%s(%s)", message, scope)
+	}
+	message = fmt.Sprintf("%s: %s", message, subject)
+	if body != "" {
+		message = fmt.Sprintf("%s\n\n%s", message, body)
+	}
+	if footer != "" {
+		message = fmt.Sprintf("%s\n\n%s", message, footer)
+	}
+	return message
+}
+
 func main(cmd *cobra.Command, args []string) error {
 	flags := cmd.Flags()
 
@@ -87,19 +108,26 @@ func main(cmd *cobra.Command, args []string) error {
 	logger = newLogger(verbose)
 	logger.Printf("Verbose logging enabled\n")
 
-	branch, branchErr := gitBranch()
-
+	subject := strings.Join(args, " ")
 	commitTypeFlagVal, err := flags.GetString(commitTypeFlag)
 	if err != nil {
 		return err
 	}
-	commitType, err := parseCommitType(commitTypeFlagVal, branch, branchErr)
+	scope, err := flags.GetString(scopeFlag)
+	if err != nil {
+		return err
+	}
+	body, err := flags.GetString(bodyFlag)
+	if err != nil {
+		return err
+	}
+	footer, err := flags.GetString(footerFlag)
 	if err != nil {
 		return err
 	}
 
-	scope, err := flags.GetString(scopeFlag)
-	logger.Printf("Scope flag value: '%s'\n", scope)
+	branch, branchErr := gitBranch()
+	commitType, err := parseCommitType(commitTypeFlagVal, branch, branchErr)
 	if err != nil {
 		return err
 	}
@@ -111,31 +139,7 @@ func main(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	subject := strings.Join(args, " ")
-	logger.Printf("Subject: '%s'\n", subject)
-
-	message := commitType
-	if scope != "" && scope != scopeFlagSentinel {
-		message = fmt.Sprintf("%s(%s)", message, scope)
-	}
-	message = fmt.Sprintf("%s: %s", message, subject)
-
-	body, err := flags.GetString(bodyFlag)
-	if err != nil {
-		return err
-	}
-	if body != "" {
-		message = fmt.Sprintf("%s\n\n%s", message, body)
-	}
-
-	footer, err := flags.GetString(footerFlag)
-	if err != nil {
-		return err
-	}
-	if footer != "" {
-		message = fmt.Sprintf("%s\n\n%s", message, footer)
-	}
-
+	message := parseMessage(commitType, scope, subject, body, footer)
 	fmt.Printf("%s\n", message)
 	return nil
 }
