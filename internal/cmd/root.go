@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"io"
+	"log/slog"
 	"os"
 	"strings"
 
@@ -11,20 +13,21 @@ import (
 )
 
 var rootCmd *cobra.Command = &cobra.Command{
-	Use:   cmdName,
-	Short: cmdShortHelp,
-	Args:  cobra.MinimumNArgs(1),
-	RunE:  main,
+	Use:               cmdName,
+	Short:             cmdShortHelp,
+	Args:              cobra.MinimumNArgs(1),
+	PersistentPreRunE: setupLogging,
+	RunE:              main,
 }
 
 func init() {
-	flags := rootCmd.Flags()
-	flags.BoolP(
+	rootCmd.PersistentFlags().BoolP(
 		verboseFlag,
 		string(verboseFlag[0]),
 		false,
 		"enable verbose logging",
 	)
+	flags := rootCmd.Flags()
 	flags.StringP(
 		commitTypeFlag,
 		string(commitTypeFlag[0]),
@@ -56,6 +59,25 @@ func init() {
 		footerFlagDefault,
 		"add a footer to the commit message",
 	)
+}
+
+func setupLogging(cmd *cobra.Command, args []string) error {
+	flags := cmd.Flags()
+	verbose, err := flags.GetBool(verboseFlag)
+	if err != nil {
+		return err
+	}
+	var handler slog.Handler
+	if verbose {
+		opts := &slog.HandlerOptions{Level: slog.LevelDebug}
+		handler = slog.NewJSONHandler(os.Stderr, opts)
+	} else {
+		handler = slog.NewJSONHandler(io.Discard, nil)
+	}
+	logger := slog.New(handler)
+	slog.SetDefault(logger)
+	slog.Debug("Verbose logging enabled\n")
+	return nil
 }
 
 func Execute() {
