@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/ChrisPJohnstone/conc/internal/git"
-	"github.com/ChrisPJohnstone/conc/internal/globals"
 )
 
 type Message struct {
@@ -38,7 +37,7 @@ func (msg *Message) parseCommitType() error {
 	if msg.CommitType != "" {
 		slog.Debug(fmt.Sprintf("Type flag specified: '%s'", msg.CommitType))
 		var matches []string
-		for _, commitType := range globals.CommitTypes {
+		for _, commitType := range CommitTypes {
 			if strings.HasPrefix(commitType, msg.CommitType) {
 				slog.Debug(fmt.Sprintf("Flag matches '%s'", commitType))
 				matches = append(matches, commitType)
@@ -70,19 +69,19 @@ func (msg *Message) parseCommitType() error {
 			"error",
 			msg.branchErr,
 		)
-		msg.CommitType = globals.CommitTypeFallback
+		msg.CommitType = CommitTypeFallback
 		return nil
 	}
 	// TODO: Support prefix / fuzzy
 	slog.Debug(fmt.Sprintf("Checking branch name '%s' for type", msg.branch))
-	for _, commitType := range globals.CommitTypes {
+	for _, commitType := range CommitTypes {
 		if strings.HasPrefix(msg.branch, commitType) {
 			msg.CommitType = commitType
 			return nil
 		}
 	}
 	slog.Debug("No type matched. Using fallback")
-	msg.CommitType = globals.CommitTypeFallback
+	msg.CommitType = CommitTypeFallback
 	return nil
 }
 
@@ -132,7 +131,7 @@ func (msg *Message) Parse() error {
 
 func (msg *Message) String() string {
 	message := msg.CommitType
-	if msg.Scope != "" && msg.Scope != globals.ScopeFlagSentinel {
+	if msg.Scope != "" && msg.Scope != ScopeFlagSentinel {
 		message = fmt.Sprintf("%s(%s)", message, msg.Scope)
 	}
 	message = fmt.Sprintf("%s: %s", message, msg.Subject)
