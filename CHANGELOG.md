@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/ChrisPJohnstone/conc/compare/v1.0.0...v1.1.0) (2026-10-24)
+
+
+### Features
+
+* fix readme typo ([#30](https://github.com/ChrisPJohnstone/conc/issues/30)) ([3a97a76](https://github.com/ChrisPJohnstone/conc/commit/3a97a7611b6c27f1963fc627662c136f0c8fecb4))
+
 ## [1.0.0](https://github.com/ChrisPJohnstone/conc/compare/v0.6.0...v1.0.0) (2026-10-23)
 
 
