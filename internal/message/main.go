@@ -87,7 +87,7 @@ func (msg *Message) parseCommitType() error {
 }
 
 func (msg *Message) parseScope() {
-	if msg.Scope != "" || msg.Scope == globals.ScopeFlagSentinel {
+	if msg.Scope != "" {
 		slog.Debug(fmt.Sprintf(
 			"Scope provided: '%s'. Parse not required",
 			msg.Scope,
