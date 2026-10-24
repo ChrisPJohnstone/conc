@@ -1,11 +1,8 @@
-package cmd
+package globals
 
 const (
-	cmdName            string = "conc"
-	cmdShortHelp       string = "Conventional Commit Helper"
-	verboseFlag        string = "verbose"
-	commitTypeFlag     string = "type"
-	commitTypeFallback string = "feat"
+	CommitTypeFallback string = "feat"
+	ScopeFlagSentinel  string = "-"
 	commitTypeBuild    string = "build"
 	commitTypeChore    string = "chore"
 	commitTypeCi       string = "ci"
@@ -17,18 +14,9 @@ const (
 	commitTypeRevert   string = "revert"
 	commitTypeStyle    string = "style"
 	commitTypeTest     string = "test"
-	scopeFlag          string = "scope"
-	scopeFlagDefault   string = ""
-	scopeFlagSentinel  string = "-"
-	scopeFallback      string = ""
-	scopeBranchPattern string = `^[^/]*/([A-Z]*-[0-9]*).*`
-	bodyFlag           string = "body"
-	bodyFlagDefault    string = ""
-	footerFlag         string = "footer"
-	footerFlagDefault  string = ""
 )
 
-var commitTypes []string = []string{
+var CommitTypes []string = []string{
 	commitTypeBuild,
 	commitTypeChore,
 	commitTypeCi,

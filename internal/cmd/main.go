@@ -2,7 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"log/slog"
 	"strings"
+
+	"github.com/ChrisPJohnstone/conc/internal/message"
 
 	"github.com/spf13/cobra"
 )
@@ -10,41 +13,35 @@ import (
 func main(cmd *cobra.Command, args []string) error {
 	flags := cmd.Flags()
 
-	verbose, err := flags.GetBool(verboseFlag)
-	if err != nil {
-		return err
-	}
-	logger = newLogger(verbose)
-	logger.Printf("Verbose logging enabled\n")
-
-	msg := &message{}
+	var err error
+	msg := &message.Message{}
 	msg.Subject = strings.Join(args, " ")
-	logger.Printf("Raw subject: '%s'\n", msg.Subject)
+	slog.Debug(fmt.Sprintf("Raw subject: '%s'", msg.Subject))
 	msg.CommitType, err = flags.GetString(commitTypeFlag)
 	if err != nil {
 		return err
 	}
-	logger.Printf("Raw commitType: '%s'\n", msg.CommitType)
+	slog.Debug(fmt.Sprintf("Raw commitType: '%s'", msg.CommitType))
 	msg.Scope, err = flags.GetString(scopeFlag)
 	if err != nil {
 		return err
 	}
-	logger.Printf("Raw scope: '%s'\n", msg.Scope)
+	slog.Debug(fmt.Sprintf("Raw scope: '%s'", msg.Scope))
 	msg.Body, err = flags.GetString(bodyFlag)
 	if err != nil {
 		return err
 	}
-	logger.Printf("Raw body: '%s'\n", msg.Body)
+	slog.Debug(fmt.Sprintf("Raw body: '%s'", msg.Body))
 	msg.Footer, err = flags.GetString(footerFlag)
 	if err != nil {
 		return err
 	}
-	logger.Printf("Raw footer: '%s'\n", msg.Footer)
+	slog.Debug(fmt.Sprintf("Raw footer: '%s'", msg.Footer))
 	err = msg.Parse()
 	if err != nil {
 		return err
 	}
-	logger.Printf("Full message: '%s'\n", msg)
+	slog.Debug(fmt.Sprintf("Full message: '%s'", msg))
 
 	fmt.Printf("%s\n", msg)
 	return nil

@@ -1,12 +1,16 @@
-package cmd
+package message
 
 import (
 	"fmt"
+	"log/slog"
 	"regexp"
 	"strings"
+
+	"github.com/ChrisPJohnstone/conc/internal/git"
+	"github.com/ChrisPJohnstone/conc/internal/globals"
 )
 
-type message struct {
+type Message struct {
 	Subject    string
 	CommitType string
 	Scope      string
@@ -17,23 +21,26 @@ type message struct {
 	branchErr  error
 }
 
-func (msg *message) getGitBranch() {
-	logger.Printf("Attempting to get git branch\n")
-	msg.branch, msg.branchErr = gitBranch()
+func (msg *Message) getGitBranch() {
+	slog.Debug("Attempting to get git branch")
+	msg.branch, msg.branchErr = git.GitBranch()
 	msg.hasBranch = true
 	if msg.branchErr != nil {
-		logger.Printf("Error getting git branch: '%s'", msg.branchErr)
+		slog.Debug("Error getting git branch", "error", msg.branchErr)
 	}
 }
 
-func (msg *message) parseCommitType() error {
-	logger.Printf("Attempting to parse commit type: '%s'\n", msg.CommitType)
+func (msg *Message) parseCommitType() error {
+	slog.Debug(fmt.Sprintf(
+		"Attempting to parse commit type: '%s'",
+		msg.CommitType,
+	))
 	if msg.CommitType != "" {
-		logger.Printf("Type flag specified: '%s'\n", msg.CommitType)
+		slog.Debug(fmt.Sprintf("Type flag specified: '%s'", msg.CommitType))
 		var matches []string
-		for _, commitType := range commitTypes {
+		for _, commitType := range globals.CommitTypes {
 			if strings.HasPrefix(commitType, msg.CommitType) {
-				logger.Printf("Flag matches '%s'\n", commitType)
+				slog.Debug(fmt.Sprintf("Flag matches '%s'", commitType))
 				matches = append(matches, commitType)
 			}
 		}
@@ -58,41 +65,44 @@ func (msg *message) parseCommitType() error {
 		msg.getGitBranch()
 	}
 	if msg.branchErr != nil {
-		logger.Printf(
-			"Error getting branch: '%s'. Falling back to '%s'\n",
+		slog.Debug(
+			"Error getting branch. Using fallback",
+			"error",
 			msg.branchErr,
-			commitTypeFallback,
 		)
-		msg.CommitType = commitTypeFallback
+		msg.CommitType = globals.CommitTypeFallback
 		return nil
 	}
 	// TODO: Support prefix / fuzzy
-	logger.Printf("Checking branch name '%s' for type\n", msg.branch)
-	for _, commitType := range commitTypes {
+	slog.Debug(fmt.Sprintf("Checking branch name '%s' for type", msg.branch))
+	for _, commitType := range globals.CommitTypes {
 		if strings.HasPrefix(msg.branch, commitType) {
 			msg.CommitType = commitType
 			return nil
 		}
 	}
-	logger.Printf("No type matched, falling back to '%s'\n", commitTypeFallback)
-	msg.CommitType = commitTypeFallback
+	slog.Debug("No type matched. Using fallback")
+	msg.CommitType = globals.CommitTypeFallback
 	return nil
 }
 
-func (msg *message) parseScope() {
-	if msg.Scope != "" || msg.Scope == scopeFlagSentinel {
-		logger.Printf("Scope provided: '%s'. Parse not required\n", msg.Scope)
+func (msg *Message) parseScope() {
+	if msg.Scope != "" {
+		slog.Debug(fmt.Sprintf(
+			"Scope provided: '%s'. Parse not required",
+			msg.Scope,
+		))
 		return
 	}
-	logger.Printf("Attempting to parse scope: '%s'\n", msg.Scope)
+	slog.Debug(fmt.Sprintf("Attempting to parse scope: '%s'", msg.Scope))
 	if !msg.hasBranch {
 		msg.getGitBranch()
 	}
 	if msg.branchErr != nil {
-		logger.Printf(
-			"Error getting branch: '%s'. Falling back to '%s'\n",
+		slog.Debug(
+			"Error getting branch. Using fallback",
+			"error",
 			msg.branchErr,
-			scopeFallback,
 		)
 		msg.Scope = scopeFallback
 		return
@@ -101,28 +111,28 @@ func (msg *message) parseScope() {
 	matches := pattern.FindStringSubmatch(msg.branch)
 	if len(matches) == 2 {
 		msg.Scope = matches[1]
-		logger.Printf(
-			"Branch name matches pattern, found scope: '%s'\n",
+		slog.Debug(fmt.Sprintf(
+			"Branch name matches pattern, found scope: '%s'",
 			msg.Scope,
-		)
+		))
 		return
 	}
 }
 
-func (msg *message) Parse() error {
+func (msg *Message) Parse() error {
 	err := msg.parseCommitType()
 	if err != nil {
 		return err
 	}
-	logger.Printf("Parsed commit type: '%s'\n", msg.CommitType)
+	slog.Debug(fmt.Sprintf("Parsed commit type: '%s'", msg.CommitType))
 	msg.parseScope()
-	logger.Printf("Parsed scope: '%s'\n", msg.Scope)
+	slog.Debug(fmt.Sprintf("Parsed scope: '%s'", msg.Scope))
 	return nil
 }
 
-func (msg *message) String() string {
+func (msg *Message) String() string {
 	message := msg.CommitType
-	if msg.Scope != "" && msg.Scope != scopeFlagSentinel {
+	if msg.Scope != "" && msg.Scope != globals.ScopeFlagSentinel {
 		message = fmt.Sprintf("%s(%s)", message, msg.Scope)
 	}
 	message = fmt.Sprintf("%s: %s", message, msg.Subject)
