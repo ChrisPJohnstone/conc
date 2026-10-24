@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/ChrisPJohnstone/conc/internal/message"
+
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +19,7 @@ func main(cmd *cobra.Command, args []string) error {
 	logger = newLogger(verbose)
 	logger.Printf("Verbose logging enabled\n")
 
-	msg := &message{}
+	msg := &message.Message{}
 	msg.Subject = strings.Join(args, " ")
 	logger.Printf("Raw subject: '%s'\n", msg.Subject)
 	msg.CommitType, err = flags.GetString(commitTypeFlag)

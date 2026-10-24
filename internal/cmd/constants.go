@@ -11,7 +11,4 @@ const (
 	bodyFlagDefault   string = ""
 	footerFlag        string = "footer"
 	footerFlagDefault string = ""
-
-	scopeFallback      string = ""
-	scopeBranchPattern string = `^[^/]*/([A-Z]*-[0-9]*).*`
 )

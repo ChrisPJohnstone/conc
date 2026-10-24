@@ -1,4 +1,4 @@
-package cmd
+package message
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"github.com/ChrisPJohnstone/conc/internal/globals"
 )
 
-type message struct {
+type Message struct {
 	Subject    string
 	CommitType string
 	Scope      string
@@ -19,7 +19,7 @@ type message struct {
 	branchErr  error
 }
 
-func (msg *message) getGitBranch() {
+func (msg *Message) getGitBranch() {
 	logger.Printf("Attempting to get git branch\n")
 	msg.branch, msg.branchErr = gitBranch()
 	msg.hasBranch = true
@@ -28,7 +28,7 @@ func (msg *message) getGitBranch() {
 	}
 }
 
-func (msg *message) parseCommitType() error {
+func (msg *Message) parseCommitType() error {
 	logger.Printf("Attempting to parse commit type: '%s'\n", msg.CommitType)
 	if msg.CommitType != "" {
 		logger.Printf("Type flag specified: '%s'\n", msg.CommitType)
@@ -80,7 +80,7 @@ func (msg *message) parseCommitType() error {
 	return nil
 }
 
-func (msg *message) parseScope() {
+func (msg *Message) parseScope() {
 	if msg.Scope != "" || msg.Scope == globals.ScopeFlagSentinel {
 		logger.Printf("Scope provided: '%s'. Parse not required\n", msg.Scope)
 		return
@@ -110,7 +110,7 @@ func (msg *message) parseScope() {
 	}
 }
 
-func (msg *message) Parse() error {
+func (msg *Message) Parse() error {
 	err := msg.parseCommitType()
 	if err != nil {
 		return err
@@ -121,7 +121,7 @@ func (msg *message) Parse() error {
 	return nil
 }
 
-func (msg *message) String() string {
+func (msg *Message) String() string {
 	message := msg.CommitType
 	if msg.Scope != "" && msg.Scope != globals.ScopeFlagSentinel {
 		message = fmt.Sprintf("%s(%s)", message, msg.Scope)
