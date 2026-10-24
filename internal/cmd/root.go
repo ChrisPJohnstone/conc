@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ChrisPJohnstone/conc/internal/globals"
+	"github.com/ChrisPJohnstone/conc/internal/message"
 
 	"github.com/spf13/cobra"
 )
@@ -33,8 +33,8 @@ func init() {
 		"",
 		fmt.Sprintf(
 			"commit type\noptions: %s\nif unset will attempt to detect from branch\nfallback is '%s'",
-			strings.Join(globals.CommitTypes, ", "),
-			globals.CommitTypeFallback,
+			strings.Join(message.CommitTypes, ", "),
+			message.CommitTypeFallback,
 		),
 	)
 	flags.StringP(
@@ -43,7 +43,7 @@ func init() {
 		scopeFlagDefault,
 		fmt.Sprintf(
 			"scope for commit message\nif unset will attempt to detect from branch\nuse '%s' to disable",
-			globals.ScopeFlagSentinel,
+			message.ScopeFlagSentinel,
 		),
 	)
 	flags.StringP(
