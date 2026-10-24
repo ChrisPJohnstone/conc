@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/ChrisPJohnstone/conc/internal/git"
 	"github.com/ChrisPJohnstone/conc/internal/globals"
 )
 
@@ -21,7 +22,7 @@ type Message struct {
 
 func (msg *Message) getGitBranch() {
 	logger.Printf("Attempting to get git branch\n")
-	msg.branch, msg.branchErr = gitBranch()
+	msg.branch, msg.branchErr = git.GitBranch()
 	msg.hasBranch = true
 	if msg.branchErr != nil {
 		logger.Printf("Error getting git branch: '%s'", msg.branchErr)

@@ -1,8 +1,8 @@
-package message
+package git
 
 import "github.com/go-git/go-git/v6"
 
-func gitBranch() (string, error) {
+func GitBranch() (string, error) {
 	logger.Printf("Getting git branch\n")
 	repo, err := git.PlainOpen(".")
 	if err != nil {
