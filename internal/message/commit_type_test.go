@@ -267,7 +267,13 @@ func TestParseCommitType(t *testing.T) {
 		},
 	}
 	for _, test := range tests {
-		t.Run(test.branch, func(t *testing.T) {
+		var test_name string
+		if test.input != "" {
+			test_name = test.input
+		} else if test.branch != "" {
+			test_name = test.branch
+		}
+		t.Run(test_name, func(t *testing.T) {
 			msg := &Message{
 				CommitType: test.input,
 				hasBranch:  test.hasBranch,
