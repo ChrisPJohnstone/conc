@@ -1,6 +1,9 @@
 package message
 
-import "testing"
+import (
+	"errors"
+	"testing"
+)
 
 func TestCommitTypeFromInput(t *testing.T) {
 	tests := []struct {
@@ -70,6 +73,78 @@ func TestCommitTypeFromInput(t *testing.T) {
 		t.Run(test.input, func(t *testing.T) {
 			msg := &Message{CommitType: test.input}
 			err := msg.commitTypeFromInput(commitTypes)
+			if test.expectErr {
+				if err == nil {
+					t.Fatal("Expected error, got nil")
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			if msg.CommitType != test.expected {
+				t.Errorf(
+					"Expected '%s'. Got '%s'",
+					test.expected,
+					msg.CommitType,
+				)
+			}
+		})
+	}
+}
+
+func TestCommiTTypeFromBranch(t *testing.T) {
+	tests := []struct {
+		hasBranch bool
+		branch    string
+		branchErr bool
+		expected  string
+		expectErr bool
+	}{
+		// Simple Cases
+		{hasBranch: true, branch: "build", expected: commitTypeBuild},
+		{hasBranch: true, branch: "chore", expected: commitTypeChore},
+		{hasBranch: true, branch: "ci", expected: commitTypeCi},
+		{hasBranch: true, branch: "docs", expected: commitTypeDocs},
+		{hasBranch: true, branch: "feat", expected: commitTypeFeat},
+		{hasBranch: true, branch: "fix", expected: commitTypeFix},
+		{hasBranch: true, branch: "perf", expected: commitTypePerf},
+		{hasBranch: true, branch: "refactor", expected: commitTypeRefactor},
+		{hasBranch: true, branch: "revert", expected: commitTypeRevert},
+		{hasBranch: true, branch: "style", expected: commitTypeStyle},
+		{hasBranch: true, branch: "test", expected: commitTypeTest},
+
+		// Fallback Cases
+		{hasBranch: false, expected: CommitTypeFallback},
+		{hasBranch: true, branch: "-", expected: CommitTypeFallback},
+		{hasBranch: true, branch: "dev", expected: CommitTypeFallback},
+		{hasBranch: true, branch: "a feature it is", expected: CommitTypeFallback},
+
+		// Long Cases
+		{
+			hasBranch: true,
+			branch:    "feature/fuzzy-flag-support",
+			expected:  commitTypeFeat,
+		},
+		{
+			hasBranch: true,
+			branch:    "refactor/modules",
+			expected:  commitTypeRefactor,
+		},
+		{
+			hasBranch: true,
+			branch:    "tests/commit-types",
+			expected:  commitTypeTest,
+		},
+	}
+	commitTypes := GetCommitTypes()
+	for _, test := range tests {
+		t.Run(test.branch, func(t *testing.T) {
+			msg := &Message{hasBranch: test.hasBranch, branch: test.branch}
+			if test.branchErr {
+				msg.branchErr = errors.New("-")
+			}
+			err := msg.commitTypeFromBranch(commitTypes)
 			if test.expectErr {
 				if err == nil {
 					t.Fatal("Expected error, got nil")
