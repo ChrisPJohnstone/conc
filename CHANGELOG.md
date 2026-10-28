@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/ChrisPJohnstone/conc/compare/v1.0.0...v2.0.0) (2026-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* renamed package to git-conc ([#44](https://github.com/ChrisPJohnstone/conc/issues/44))
+
+### Features
+
+* renamed package to git-conc ([#44](https://github.com/ChrisPJohnstone/conc/issues/44)) ([ee95393](https://github.com/ChrisPJohnstone/conc/commit/ee95393acf4c8885bd5258c90ed2bb1b2be4fa03))
+
 ## [1.0.0](https://github.com/ChrisPJohnstone/conc/compare/v0.6.0...v1.0.0) (2026-10-23)
 
 
