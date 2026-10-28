@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/ChrisPJohnstone/conc/internal/git"
+	"github.com/ChrisPJohnstone/git-conc/v2/internal/git"
 )
 
 type Message struct {

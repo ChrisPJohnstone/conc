@@ -8,15 +8,11 @@ This is a simple utility to ease the suffering.
 
 - Install with go
   ```sh
-  go install github.com/ChrisPJohnstone/conc@latest
-  ```
-- Create git alias
-  ```sh
-  git config --global alias.conc '!f() { git commit -m "$(conc "$@")"; }; f'
+  go install github.com/ChrisPJohnstone/git-conc@latest
   ```
 - Get help using the tool
   ```sh
-  conc --help
+  git conc -h
   ```
 - Positional arguments are concatenated together to create the subject of the message
   ```sh
@@ -53,3 +49,5 @@ This is a simple utility to ease the suffering.
   git conc "subject" -b "body" -f "footer"
   git conc "subject" --body "body" --footer "footer"
   ```
+- **NOT IMPLEMENTED**
+  - Breaking Changes `feat!: ...`
