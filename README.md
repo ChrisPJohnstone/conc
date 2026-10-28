@@ -8,7 +8,7 @@ This is a simple utility to ease the suffering.
 
 - Install with go
   ```sh
-  go install github.com/ChrisPJohnstone/git-conc@latest
+  go install github.com/ChrisPJohnstone/git-conc/v2@latest
   ```
 - Get help using the tool
   ```sh
