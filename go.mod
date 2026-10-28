@@ -1,4 +1,4 @@
-module github.com/ChrisPJohnstone/conc
+module github.com/ChrisPJohnstone/git-conc
 
 go 1.27.3
 
