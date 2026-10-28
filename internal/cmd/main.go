@@ -5,7 +5,8 @@ import (
 	"log/slog"
 	"strings"
 
-	"github.com/ChrisPJohnstone/conc/internal/message"
+	"github.com/ChrisPJohnstone/git-conc/v2/internal/git"
+	"github.com/ChrisPJohnstone/git-conc/v2/internal/message"
 
 	"github.com/spf13/cobra"
 )
@@ -43,6 +44,5 @@ func main(cmd *cobra.Command, args []string) error {
 	}
 	slog.Debug(fmt.Sprintf("Full message: '%s'", msg))
 
-	fmt.Printf("%s\n", msg)
-	return nil
+	return git.GitCommit(msg.String())
 }
