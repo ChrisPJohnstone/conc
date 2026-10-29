@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/ChrisPJohnstone/git-conc/compare/v2.0.0...v2.1.0) (2026-10-29)
+
+
+### Features
+
+* added breaking change support ([#50](https://github.com/ChrisPJohnstone/git-conc/issues/50)) ([0ce32a1](https://github.com/ChrisPJohnstone/git-conc/commit/0ce32a1693fa5509830081c05e85e24379f4e69a))
+
 ## [2.0.0](https://github.com/ChrisPJohnstone/git-conc/compare/v1.0.0...v2.0.0) (2026-10-28)
 
 
