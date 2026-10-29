@@ -3,19 +3,21 @@ package message
 import (
 	"fmt"
 	"log/slog"
+	"strings"
 
 	"github.com/ChrisPJohnstone/git-conc/v2/internal/git"
 )
 
 type Message struct {
-	Subject    string
-	CommitType string
-	Scope      string
 	Body       string
+	Breaking   bool
+	CommitType string
 	Footer     string
-	hasBranch  bool
+	Scope      string
+	Subject    string
 	branch     string
 	branchErr  error
+	hasBranch  bool
 }
 
 func (msg *Message) getGitBranch() {
@@ -42,6 +44,9 @@ func (msg *Message) String() string {
 	message := msg.CommitType
 	if msg.Scope != "" && msg.Scope != ScopeFlagSentinel {
 		message = fmt.Sprintf("%s(%s)", message, msg.Scope)
+	}
+	if msg.Breaking || strings.HasPrefix(msg.Footer, "BREAKING CHANGE:") {
+		message = fmt.Sprintf("%s!", message)
 	}
 	message = fmt.Sprintf("%s: %s", message, msg.Subject)
 	if msg.Body != "" {
