@@ -28,6 +28,17 @@ func init() {
 	)
 	flags := rootCmd.Flags()
 	flags.StringP(
+		bodyFlag,
+		string(bodyFlag[0]),
+		bodyFlagDefault,
+		"add a body to the commit message",
+	)
+	flags.Bool(
+		breakingFlag,
+		breakingDefault,
+		"marks change as breaking",
+	)
+	flags.StringP(
 		commitTypeFlag,
 		string(commitTypeFlag[0]),
 		"",
@@ -38,6 +49,12 @@ func init() {
 		),
 	)
 	flags.StringP(
+		footerFlag,
+		string(footerFlag[0]),
+		footerFlagDefault,
+		"add a footer to the commit message",
+	)
+	flags.StringP(
 		scopeFlag,
 		string(scopeFlag[0]),
 		scopeFlagDefault,
@@ -45,18 +62,6 @@ func init() {
 			"scope for commit message\nif unset will attempt to detect from branch\nuse '%s' to disable",
 			message.ScopeFlagSentinel,
 		),
-	)
-	flags.StringP(
-		bodyFlag,
-		string(bodyFlag[0]),
-		bodyFlagDefault,
-		"add a body to the commit message",
-	)
-	flags.StringP(
-		footerFlag,
-		string(footerFlag[0]),
-		footerFlagDefault,
-		"add a footer to the commit message",
 	)
 }
 
